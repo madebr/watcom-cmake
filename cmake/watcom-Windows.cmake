@@ -1,0 +1,18 @@
+#if(NOT WATCOM)
+    #if(NOT DEFINED ENV{WATCOM})
+        #message(FATAL_ERROR "WATCOM environment variable not defined")
+    #endif()
+    #set(WATCOM $ENV{WATCOM} CACHE PATH "Root path of watcom toolchain")
+#endif()
+#if(NOT DEFINED WIPFC)
+    #if(DEFINED ENV{WIPFC})
+        #set(ENV{})
+#set(ENV{WIPFC} )
+#message("CMAKE_HOST_SYSTEM:${CMAKE_HOST_SYSTEM}")
+
+set(CMAKE_SYSTEM_NAME "Windows")
+set(CMAKE_C_COMPILER "wcl386")
+set(CMAKE_CXX_COMPILER "wcl386")
+
+set(CMAKE_C_FLAGS_INIT "-bc -fp6 -mf")
+message("CMAKE_C_FLAGS_INIT: ${CMAKE_C_FLAGS_INIT}")
