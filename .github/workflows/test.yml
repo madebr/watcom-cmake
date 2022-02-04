@@ -16,8 +16,8 @@ jobs:
       - name: Build for DOS
         run: |
           cmake -S . -B build_dos -DCMAKE_TOOLCHAIN_FILE=cmake/watcom-DOS.cmake
-          cmake --build build_dos
+          cmake --build build_dos --verbose
       - name: Build for Windows
         run: |
           cmake -S . -B build_windows -DCMAKE_TOOLCHAIN_FILE=cmake/watcom-Windows.cmake
-          cmake --build build_windows
+          cmake --build build_windows --verbose
