@@ -9,10 +9,15 @@ jobs:
         os:
           - windows-latest
           - ubuntu-latest
+        watcom_version:
+          - "1.9"
+          - "2.0"
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
-      - uses: madebr/setup-watcom@0.0.1
+      - uses: madebr/setup-watcom@0.0.2
+        with:
+          version: "${{ matrix.watcom_version }}"
       - name: Build system information
         run: |
           cmake --version
@@ -20,7 +25,18 @@ jobs:
         run: |
           cmake -S . -B build_dos "-DCMAKE_TOOLCHAIN_FILE=cmake/watcom-DOS.cmake" -G "Watcom WMake"
           cmake --build build_dos
+          cd build_dos
+          cpack .
       - name: Build for Windows
         run: |
           cmake -S . -B build_windows "-DCMAKE_TOOLCHAIN_FILE=cmake/watcom-Windows.cmake" -G "Watcom WMake"
           cmake --build build_windows --verbose
+          cd build_windows
+          cpack build_windows
+      - name: Archive artifact
+        uses: actions/upload-artifact@v2
+        with:
+            name: action-artifact
+            if-no-files-found: error
+            path: |
+                **/*.zip
