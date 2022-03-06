@@ -15,7 +15,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
-      - uses: madebr/setup-watcom@0.0.2
+      - uses: open-watcom/setup-watcom@v0
         with:
           version: "${{ matrix.watcom_version }}"
       - name: Build system information
