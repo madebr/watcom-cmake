@@ -24,12 +24,12 @@ jobs:
       - name: Build real DOS executable
         run: |
           cmake -S . -B build_dos_real "-DCMAKE_TOOLCHAIN_FILE=cmake/watcom-DOS-real.cmake"
-          cmake --build build_dos_real
+          cmake --build build_dos_real --verbose
           cmake --build build_dos_real --target package
       - name: Build protected DOS executable
         run: |
           cmake -S . -B build_dos_protected "-DCMAKE_TOOLCHAIN_FILE=cmake/watcom-DOS-protected.cmake"
-          cmake --build build_dos_protected
+          cmake --build build_dos_protected --verbose
           cmake --build build_dos_protected --target package
       - name: Build for Windows
         run: |
