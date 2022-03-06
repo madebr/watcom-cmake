@@ -21,18 +21,21 @@ jobs:
       - name: Build system information
         run: |
           cmake --version
-      - name: Build for DOS
+      - name: Build real DOS executable
         run: |
-          cmake -S . -B build_dos "-DCMAKE_TOOLCHAIN_FILE=cmake/watcom-DOS.cmake" -G "Watcom WMake"
-          cmake --build build_dos
-          cd build_dos
-          cpack .
+          cmake -S . -B build_dos_real "-DCMAKE_TOOLCHAIN_FILE=cmake/watcom-DOS-real.cmake"
+          cmake --build build_dos_real
+          cmake --build build_dos_real --target package
+      - name: Build protected DOS executable
+        run: |
+          cmake -S . -B build_dos_protected "-DCMAKE_TOOLCHAIN_FILE=cmake/watcom-DOS-protected.cmake"
+          cmake --build build_dos_protected
+          cmake --build build_dos_protected --target package
       - name: Build for Windows
         run: |
-          cmake -S . -B build_windows "-DCMAKE_TOOLCHAIN_FILE=cmake/watcom-Windows.cmake" -G "Watcom WMake"
+          cmake -S . -B build_windows "-DCMAKE_TOOLCHAIN_FILE=cmake/watcom-Windows.cmake"
           cmake --build build_windows --verbose
-          cd build_windows
-          cpack build_windows
+          cmake --build build_windows --target package
       - name: Archive artifact
         uses: actions/upload-artifact@v2
         with:
